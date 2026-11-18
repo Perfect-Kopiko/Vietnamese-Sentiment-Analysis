@@ -1,0 +1,19 @@
+# Python & Environments
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Model checkpoints & large weights
+*.pt
+*.bin
+*.pkl
+*.vec
+checkpoints/*
+!checkpoints/README.md
+
+# Raw data
+data/raw/
+
+# Logs & tracking
+wandb/
