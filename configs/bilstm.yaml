@@ -1,1 +1,36 @@
-# Cấu hình cho mô hình BiLSTM
+# ==============================================================================
+# CẤU HÌNH THÍ NGHIỆM MÔ HÌNH BILSTM (ĐỀ TÀI 6: PHÂN TÍCH CẢM XÚC TIẾNG VIỆT)
+# ==============================================================================
+
+data:
+  train_path: "data/raw/train.csv"
+  val_path: "data/raw/validation.csv"
+  test_path: "data/raw/test.csv"
+  max_len: 64
+  min_freq: 2
+  use_word_segment: true
+  normalize_noise: false
+
+embedding:
+  embed_dim: 300
+  w2v_path: ""
+  freeze: false
+
+model:
+  hidden_dim: 128
+  num_layers: 2
+  dropout: 0.3
+  pooling: "attention"  # hỗ trợ "attention" và "mean_max"
+  num_classes: 3
+
+training:
+  batch_size: 64
+  epochs: 15
+  lr: 0.001
+  weight_decay: 0.0001
+  grad_clip: 1.0
+  loss_type: "weighted_ce"  # hỗ trợ "ce", "weighted_ce", "focal"
+  focal_gamma: 2.0
+  checkpoint_dir: "checkpoints/bilstm"
+  use_wandb: true
+  wandb_project: "vietnamese-sentiment-topic6"
