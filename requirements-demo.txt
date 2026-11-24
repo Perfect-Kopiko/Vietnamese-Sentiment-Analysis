@@ -1,0 +1,7 @@
+# Baseline checkpoint was built with scikit-learn 1.7.2 and PyVi 0.1.1.
+scikit-learn==1.7.2
+pyvi==0.1.1
+joblib==1.5.2
+numpy==2.3.4
+pandas==2.3.3
+gradio==6.32.0

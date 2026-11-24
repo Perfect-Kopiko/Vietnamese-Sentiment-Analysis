@@ -1,0 +1,18 @@
+{
+  "sha256": {
+    "train": "fe9104b15fe8d5608247b1028ae5511c13b542c40d9b3fc35cf6ceaec51e395c",
+    "validation": "9e8f408b0529dc162d88aec652c87a19e77ed2625d76e393d693367b90cef4c9",
+    "test": "f6c354be06c692582e816b056ff9611292c7a573ba6a277bdea632eabb23dafb"
+  },
+  "n_samples": 16175,
+  "columns": [
+    "text",
+    "label"
+  ],
+  "label_ids": [
+    0,
+    1,
+    2
+  ],
+  "original_data_unchanged": true
+}

@@ -1,1 +1,22 @@
-# Cấu hình cho baseline TF-IDF + Logistic Regression
+# All paths are relative to the repository root, not the working directory.
+seed: 42
+data_dir: data/raw
+output_dir: reports/tfidf
+checkpoint: checkpoints/best_tfidf.pkl
+tfidf:
+  ngram_range: [1, 2]
+  min_df: 2
+  max_df: 1.0
+  max_features: 40000
+  sublinear_tf: true
+logistic_regression:
+  C_values: [1.0, 4.0]
+  class_weight: balanced
+  solver: lbfgs
+  max_iter: 2000
+experiments:
+  use_segment: [false, true]
+  normalize_noise: [false, true]
+  fold_accents: [false, true]
+noise:
+  teencode_probability: 0.3

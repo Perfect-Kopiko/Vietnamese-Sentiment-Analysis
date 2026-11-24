@@ -1,0 +1,4 @@
+split,rows,duplicate_text_rows,duplicate_text_label_rows,texts_with_conflicting_labels
+train,11426,1,0,1
+validation,1583,0,0,0
+test,3166,0,0,0
