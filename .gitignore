@@ -12,6 +12,10 @@ __pycache__/
 checkpoints/*
 !checkpoints/README.md
 
+# Allow lightweight experiment results (JSON reports)
+!results/
+!results/*.json
+
 # Raw data
 data/raw/
 

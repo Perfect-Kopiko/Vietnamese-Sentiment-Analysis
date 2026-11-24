@@ -1,0 +1,90 @@
+{
+  "run_name": "bilstm_seg_w2v_weighted_ce",
+  "config": {
+    "data": {
+      "train_path": "data/raw/train.csv",
+      "val_path": "data/raw/validation.csv",
+      "test_path": "data/raw/test.csv",
+      "max_len": 64,
+      "min_freq": 2,
+      "use_word_segment": true,
+      "normalize_noise": false
+    },
+    "embedding": {
+      "embed_dim": 300,
+      "w2v_path": "data/resources/cc.vi.300.vec",
+      "freeze": false
+    },
+    "model": {
+      "hidden_dim": 128,
+      "num_layers": 2,
+      "dropout": 0.3,
+      "pooling": "attention",
+      "num_classes": 3
+    },
+    "training": {
+      "batch_size": 64,
+      "epochs": 15,
+      "lr": 0.001,
+      "weight_decay": 0.0001,
+      "grad_clip": 1.0,
+      "loss_type": "weighted_ce",
+      "focal_gamma": 2.0,
+      "checkpoint_dir": "checkpoints/bilstm",
+      "use_wandb": true,
+      "wandb_project": "vietnamese-sentiment-topic6"
+    }
+  },
+  "best_val_macro_f1": 0.7960997613151758,
+  "val_metrics": {
+    "accuracy": 0.9121920404295641,
+    "macro_f1": 0.7960997613151758,
+    "weighted_f1": 0.9125217049232404,
+    "f1_negative": 0.922752808988764,
+    "f1_neutral": 0.527027027027027,
+    "f1_positive": 0.9385194479297365,
+    "confusion_matrix": [
+      [
+        657,
+        20,
+        28
+      ],
+      [
+        21,
+        39,
+        13
+      ],
+      [
+        41,
+        16,
+        748
+      ]
+    ]
+  },
+  "test_metrics": {
+    "accuracy": 0.8960833859759949,
+    "macro_f1": 0.760353637347396,
+    "weighted_f1": 0.8945191085760902,
+    "f1_negative": 0.9140083217753121,
+    "f1_neutral": 0.4423076923076923,
+    "f1_positive": 0.9247448979591837,
+    "confusion_matrix": [
+      [
+        1318,
+        40,
+        51
+      ],
+      [
+        53,
+        69,
+        45
+      ],
+      [
+        104,
+        36,
+        1450
+      ]
+    ]
+  },
+  "checkpoint_path": "checkpoints/bilstm/bilstm_seg_w2v_weighted_ce_best.pt"
+}
