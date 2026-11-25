@@ -1,0 +1,2 @@
+﻿Model,Total Samples,Accuracy (%),Error Rate (%),Sarcasm Error (%),Double-Neg Error (%),Macro-F1
+PhoBERT-v2,70,50.0,50.0,75.0,16.67,0.5362

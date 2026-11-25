@@ -1,0 +1,36 @@
+﻿text,true_label,pred_label,confidence,is_sarcastic,notes
+"Thầy dạy hay quá, cả lớp ngủ ngon lành từ đầu đến cuối tiết.",Negative,Positive,0.99,1,Mỉa mai khen để chê (ngủ ngon = chán)
+"Cô giảng bài cực kỳ dễ hiểu, hiểu chết liền luôn á.",Negative,Positive,0.991,1,Mỉa mai (hiểu chết liền = không hiểu)
+"Slide bài giảng đẹp xuất sắc, toàn chữ là chữ nhìn hoa cả mắt.",Negative,Positive,0.9847,1,Mỉa mai khen slide đẹp nhưng thực tế rối chữ
+"Thầy rất đúng giờ, buổi nào cũng chỉ trễ có đúng 45 phút thôi.",Negative,Positive,0.9579,1,Mỉa mai khen đúng giờ nhưng đi trễ
+"Thầy nhiệt tình hết mức, hỏi bài trên nhóm từ tháng trước đến giờ vẫn chưa thèm seen.",Negative,Positive,0.9837,1,Mỉa mai giảng viên không phản hồi
+"Phòng học xịn thật, máy lạnh bật 16 độ mà ngồi chảy mồ hôi như tắm.",Negative,Positive,0.7479,1,Mỉa mai cơ sở vật chất kém
+"Cô chấm điểm thoáng cực kỳ, làm đúng hết mà vẫn được hẳn 5 điểm.",Negative,Positive,0.9803,1,Mỉa mai chấm điểm quá khắt khe
+Bài giảng cuốn hút đến mức mình chỉ muốn môn này kết thúc ngay lập tức.,Negative,Positive,0.9337,1,Mỉa mai bài giảng nhàm chán
+"Thầy nói to và rõ lắm, ngồi bàn đầu mà tưởng đang nghe thì thầm mùa xuân.",Negative,Positive,0.9485,1,Mỉa mai giọng giảng viên quá nhỏ
+Cảm ơn thầy đã cho đề thi vượt tầm vũ trụ để em biết mình dốt cỡ nào.,Negative,Positive,0.9373,1,Mỉa mai đề thi quá khó
+"Cô rất tâm lý, tuần nào cũng tặng thêm 5 bài tập lớn cho sinh viên đỡ rảnh.",Negative,Positive,0.989,1,Mỉa mai giao quá nhiều bài tập
+"Học môn này bổ ích quá, học xong một kỳ đầu óc vẫn trắng tinh như mới.",Negative,Positive,0.986,1,Mỉa mai không tiếp thu được kiến thức
+"Thầy giải đáp thắc mắc rất chi tiết, cứ hỏi câu nào là thầy bảo tự lên Google tìm.",Negative,Positive,0.9886,1,Mỉa mai giảng viên không hỗ trợ
+"Lịch học sắp xếp hợp lý ghê, học sáng thứ 7 lúc 7 giờ để rèn luyện sức khỏe.",Negative,Positive,0.9832,1,Mỉa mai lịch học bất hợp lý
+"Giảng viên thân thiện lắm, sinh viên hỏi lại một chút là quát ầm lên.",Negative,Positive,0.9808,1,Mỉa mai thái độ giảng viên nóng nảy
+"Thầy đọc slide truyền cảm như ru ngủ, thật là một trải nghiệm khó quên.",Negative,Positive,0.9906,1,Mỉa mai giảng buồn ngủ
+"Cô rất công bằng, ai cô thích thì 10 điểm còn lại tùy tâm trạng.",Negative,Positive,0.9889,1,Mỉa mai chấm điểm cảm tính
+"Môn này học xong chắc chắn thành tài, thành tài xế công nghệ.",Negative,Positive,0.9758,1,Mỉa mai chơi chữ chê chất lượng môn học
+"Thầy hướng dẫn làm lab tận tình quá, đưa đề xong rồi đi ra ngoài uống cà phê.",Negative,Positive,0.8915,1,Mỉa mai không hướng dẫn thực hành
+"Bài kiểm tra ngắn gọn súc tích, có đúng 100 câu trắc nghiệm làm trong 30 phút.",Negative,Positive,0.981,1,Mỉa mai thời gian làm bài quá ít
+"Thầy giảng nhanh như đọc rap, ghi chép kịp chắc phải có siêu năng lực.",Negative,Positive,0.9784,1,Mỉa mai tốc độ giảng quá nhanh
+"Cô rất tôn trọng sinh viên, báo nghỉ học trước hẳn 5 phút khi cả lớp đã đến trường.",Negative,Positive,0.9722,1,Mỉa mai báo nghỉ quá muộn
+"Thầy ra đề bám sát bài giảng ghê, 90% nội dung chưa từng xuất hiện trên lớp.",Negative,Positive,0.9877,1,Mỉa mai đề thi lệch nội dung dạy
+Nhờ môn này mà mình biết cảm giác học lại nó thú vị ra sao.,Negative,Positive,0.9631,1,Mỉa mai môn học dễ rớt
+"Thầy có phương pháp dạy rất độc đáo, dạy một kiểu nhưng lúc thi lại hỏi kiểu khác.",Negative,Positive,0.8429,1,Mỉa mai dạy và thi không khớp
+Sinh viên rất thích cách thầy tạo bất ngờ bằng việc điểm danh đúng ngày trời bão.,Negative,Positive,0.9901,1,Mỉa mai điểm danh bất hợp lý
+"Thầy rất chịu khó tương tác, cứ 5 phút lại gọi tên kiểm tra bài cũ muốn rớt tim.",Negative,Positive,0.9765,1,Mỉa mai tạo áp lực trên lớp
+"Cô sửa bài rất có tâm, chỉ ghi đúng một chữ sai rồi không giải thích thêm gì.",Negative,Positive,0.9282,1,Mỉa mai nhận xét bài quá sơ sài
+Học kỳ này thật tuyệt vời khi được đăng ký trúng lớp của thầy.,Negative,Positive,0.9887,1,Mỉa mai ngữ cảnh ẩn ý tiêu cực
+Mình cực kỳ ấn tượng với tốc độ phản hồi email sau 3 tuần của giảng viên.,Negative,Positive,0.9891,1,Mỉa mai phản hồi quá chậm
+Không một buổi học nào của cô mà mình cảm thấy lãng phí thời gian cả.,Positive,Negative,0.866,0,Phủ định từ tiêu cực thành tích cực
+Không có lý do gì để không đăng ký thêm môn khác do thầy đứng lớp.,Positive,Negative,0.9821,0,Phủ định kép mang nghĩa tích cực
+Không phải khen quá lời chứ đây là môn mình thích nhất từ đầu năm đến giờ.,Positive,Neutral,0.6067,0,Phủ định mở đầu mang nghĩa tích cực
+Slide bài giảng không có gì nổi bật nhưng cũng không thiếu thông tin cần thiết.,Neutral,Negative,0.9864,0,Phủ định kép mang nghĩa trung tính
+Giảng viên không quá nghiêm khắc nhưng cũng không quá thoải mái.,Neutral,Negative,0.9574,0,Phủ định kép mang nghĩa trung tính
