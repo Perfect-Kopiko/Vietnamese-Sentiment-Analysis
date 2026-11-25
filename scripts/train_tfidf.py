@@ -4,10 +4,14 @@ import argparse
 import itertools
 import json
 import platform
+import sys
 import warnings
 from datetime import datetime, timezone
 from importlib.metadata import version
 from pathlib import Path
+
+if __package__ in (None, ""):
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import joblib
 import numpy as np

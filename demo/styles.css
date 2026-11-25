@@ -5,10 +5,25 @@ body { background: #f6f8fa; }
 .hero { padding: 30px 4px 10px; }
 .hero h1 { color: #183044; font-size: clamp(28px, 4vw, 42px); line-height: 1.2; margin: 10px 0 12px; letter-spacing: -.035em; }
 .hero p { color: #546679; max-width: 780px; font-size: 16px; line-height: 1.65; margin: 0; }
+.dark .hero h1 { color: #e2e8f0; }
+.dark .hero p { color: #b7c6d6; }
 .input-panel { background: white !important; border: 1px solid #e0e7ed !important; border-radius: 16px !important; padding: 22px !important; }
 #example-buttons { gap: 8px; flex-wrap: wrap; }
 #demo-actions { gap: 10px; margin-top: 6px; }
 .model-card { background: white !important; border: 1px solid #dfe7ed !important; border-radius: 16px !important; padding: 20px !important; gap: 12px !important; box-shadow: 0 3px 12px #142e4410; }
+.model-card, .input-panel {
+  --body-text-color: #183044;
+  --block-title-text-color: #183044;
+  --block-label-text-color: #183044;
+  --block-label-background-fill: #f1f5f9;
+  --block-background-fill: #ffffff;
+  --background-fill-primary: #ffffff;
+  --background-fill-secondary: #f1f5f9;
+  --input-text-color: #183044;
+  --input-background-fill: #ffffff;
+}
+.model-card :is(h3, p, span, .label, .confidence, .prose) { color: #183044 !important; }
+.model-card .output-class { background: #e8f5f3 !important; color: #183044 !important; }
 .model-status { font-size: 12px; line-height: 1.6; min-height: 44px; }
 @media (max-width: 700px) {
   .hero { padding-top: 18px; }

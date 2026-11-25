@@ -1,7 +1,11 @@
 """Demo Gradio so sánh ba mô hình."""
 
 import os
+import sys
 from pathlib import Path
+
+if __package__ in (None, ""):
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from src.models.tfidf_baseline import ROOT
 
@@ -53,23 +57,24 @@ def add_main_comparison(inference):
                     queue=False, api_visibility="private",
                 )
         with gr.Row(elem_id="demo-actions"):
+            normalize = gr.Checkbox(label="Bật chuẩn hóa Teencode / Nhiễu", value=False, scale=3)
             run = gr.Button("So sánh mô hình", variant="primary", scale=3)
             clear = gr.Button("Xóa", scale=1)
     outputs = model_cards(inference)
 
-    def predict(text):
+    def predict(text, normalize_noise):
         try:
-            results = inference.compare(text)
+            results = inference.compare(text, normalize_noise)
         except ValueError as exc:
             raise gr.Error(str(exc), print_exception=False) from exc
         return [value for result in results for value in (result["probabilities"], result["status"])]
 
     def reset():
-        return ("", *(value for model in MODEL_NAMES for value in (None, inference.status(model))))
+        return ("", False, *(value for model in MODEL_NAMES for value in (None, inference.status(model))))
 
-    run.click(predict, inputs=text, outputs=outputs, api_name="compare",
+    run.click(predict, inputs=[text, normalize], outputs=outputs, api_name="compare",
               concurrency_limit=1)
-    clear.click(reset, outputs=[text, *outputs], queue=False, api_visibility="private")
+    clear.click(reset, outputs=[text, normalize, *outputs], queue=False, api_visibility="private")
 
 
 def create_app(inference=None):

@@ -29,6 +29,7 @@ data/.cache/
 .pytest_cache/
 .pytest-tmp/
 /Vietnamese-Sentiment-Analysis-review*.zip
+/nhiệm vụ tiếp.docx
 .ipynb_checkpoints/
 **/.ipynb_checkpoints/
 *.log

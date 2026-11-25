@@ -76,6 +76,11 @@ def test_main_comparison_keeps_all_three_models():
     routes = [event for event in config["dependencies"] if event["api_visibility"] == "public"]
     assert [event["api_name"] for event in routes] == ["compare"]
     assert len(routes[0]["outputs"]) == 6
+    assert len(routes[0]["inputs"]) == 2
+    checkboxes = [c for c in config["components"] if c["type"] == "checkbox"]
+    assert len(checkboxes) == 1
+    assert checkboxes[0]["props"]["label"] == "Bật chuẩn hóa Teencode / Nhiễu"
+    assert checkboxes[0]["props"]["value"] is False
     assert sum(c["type"] == "label" for c in config["components"]) == 3
     assert sum(c["type"] == "textbox" for c in config["components"]) == 1
     for component in config["components"]:
@@ -83,3 +88,26 @@ def test_main_comparison_keeps_all_three_models():
             value = component.get("props", {}).get(key)
             if isinstance(value, str):
                 assert "?" not in value, (key, value)
+
+
+def test_normalization_toggle_preserves_baseline(real_artifact):
+    inference = InferencePipeline()
+    text = "gv dạy ko rõ ràng, sv k hiểu bài"
+    normalized = "giảng viên dạy không rõ ràng, sinh viên không hiểu bài"
+    pipeline = inference.artifact["pipeline"]
+    before = inference.predict(text)
+    enabled = inference.predict(text, normalize_noise=True)
+    expected = pipeline.predict_proba([normalized])[0]
+    assert list(enabled["probabilities"].values()) == pytest.approx(expected)
+    assert enabled["probabilities"] != before["probabilities"]
+    assert pipeline.named_steps["preprocess"].normalize_noise is False
+    assert inference.predict(text) == before
+
+
+def test_corrupt_bilstm_does_not_disable_tfidf(tmp_path):
+    checkpoint = tmp_path / "broken.pt"
+    checkpoint.write_bytes(b"broken")
+    inference = InferencePipeline(bilstm_checkpoint=checkpoint)
+    assert "Không nạp được BiLSTM" in inference.status("BiLSTM")
+    assert inference.predict("Thầy giảng hay")["probabilities"]
+    assert inference.predict("Thầy giảng hay", "BiLSTM")["probabilities"] is None

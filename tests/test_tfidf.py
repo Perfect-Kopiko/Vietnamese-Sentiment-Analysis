@@ -56,7 +56,9 @@ def test_noise_is_deterministic_and_does_not_mutate_input():
 
 @pytest.mark.parametrize("model", MODEL_NAMES)
 def test_missing_checkpoint_has_no_invented_prediction(tmp_path, model):
-    inference = InferencePipeline(tmp_path / "does-not-exist.pkl")
+    inference = InferencePipeline(tmp_path / "does-not-exist.pkl",
+                                  bilstm_checkpoint=tmp_path / "absent.pt",
+                                  phobert_checkpoint=tmp_path / "absent-phobert.pt")
     result = inference.predict("Thầy giảng dễ hiểu.", model)
     assert result["label"] is None
     assert result["probabilities"] is None

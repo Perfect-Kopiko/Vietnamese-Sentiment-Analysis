@@ -1,31 +1,24 @@
 # Vietnamese Sentiment Analysis
 
-Phân loại bình luận sinh viên UIT-VSFC thành ba nhãn 0 (tiêu cực), 1 (trung tính) và 2 (tích cực). Nhánh `feat/tfidf-demo` gồm mô hình TF-IDF + Logistic Regression, thí nghiệm tách từ và nhiễu, notebook EDA và demo Gradio.
+Phân loại bình luận sinh viên UIT-VSFC thành ba nhãn: 0 (tiêu cực), 1 (trung tính), 2 (tích cực). Demo so sánh TF-IDF + Logistic Regression và BiLSTM; PhoBERT đang chờ tích hợp.
 
-## Chạy demo
+## Cài đặt
 
-Chạy từ thư mục gốc dự án bằng Python 3.13.5. Nếu tải mã qua Git, chép `best_tfidf.pkl` từ bản bàn giao vào `checkpoints/`.
+Chạy từ thư mục gốc với Python 3.13.5:
 
 ```powershell
 python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements-demo.txt
-.\.venv\Scripts\python.exe -m demo.app
-```
-
-Mở [http://127.0.0.1:7860](http://127.0.0.1:7860), nhập bình luận hoặc chọn câu mẫu, rồi bấm **So sánh mô hình** để xem nhãn và xác suất. Demo dùng checkpoint cục bộ và chạy offline sau khi cài thư viện. BiLSTM và PhoBERT báo chưa sẵn sàng khi thiếu checkpoint hoặc mã suy luận. [Hướng dẫn checkpoint](checkpoints/README.md)
-
-Đổi cổng bằng `$env:GRADIO_SERVER_PORT = "7861"`. Trên Linux/macOS, dùng `./.venv/bin/python` thay cho đường dẫn Python trong các lệnh.
-
-## Dữ liệu và kiểm chứng
-
-Cài thêm thư viện để chạy EDA, huấn luyện và kiểm thử. `requirements.txt` là danh sách thư viện chung của nhóm.
-
-```powershell
 .\.venv\Scripts\python.exe -m pip install -r requirements-tfidf.txt
 .\.venv\Scripts\python.exe -m pip check
 ```
 
-Bản bàn giao có sẵn ba file CSV trong `data/raw/`. Nếu tải mã qua Git, dùng các lệnh dưới đây để tải đúng phiên bản UIT-VSFC và tạo `data/raw/manifest.json` chứa checksum. Script báo lỗi nếu CSV hiện có khác dữ liệu nguồn.
+Chỉ chạy demo: cài `requirements-demo.txt`. `requirements.txt` chứa thư viện chung của nhóm. Trên Linux/macOS, dùng `./.venv/bin/python` thay `.\.venv\Scripts\python.exe`.
+
+## Dữ liệu
+
+Nguồn: [UIT NLP / Vietnamese Students’ Feedback Corpus](https://huggingface.co/datasets/uitnlp/vietnamese_students_feedback).
+
+Bản bàn giao có ba CSV trong `data/raw/`. Nếu thiếu, chạy lệnh sau để tải đúng phiên bản và tạo `data/raw/manifest.json` chứa checksum. Script từ chối ghi đè CSV khác nguồn.
 
 ```powershell
 $env:HF_HOME = Join-Path (Get-Location) ".cache\hf"
@@ -38,21 +31,54 @@ $env:HF_HOME = Join-Path (Get-Location) ".cache\hf"
 | Validation | 705 | 73 | 805 | 1.583 |
 | Test | 1.409 | 167 | 1.590 | 3.166 |
 
-Dữ liệu gốc có trên Hugging Face. [UIT NLP / Vietnamese Students’ Feedback Corpus](https://huggingface.co/datasets/uitnlp/vietnamese_students_feedback)
+## Checkpoint và demo
 
-Kiểm tra checkpoint có sẵn bằng các lệnh dưới đây. Chạy lệnh cuối trong terminal thứ hai khi demo đang mở.
+Đặt các file theo cấu trúc:
+
+```text
+checkpoints/
+├── best_tfidf.pkl
+└── bilstm/
+    ├── bilstm_no_seg_w2v_best.pt
+    └── bilstm_seg_w2v_weighted_ce_best.pt
+```
+
+Checkpoint chính là `bilstm_no_seg_w2v_best.pt`; bản có tách từ dùng để đối chiếu. Xem [hướng dẫn checkpoint](checkpoints/README.md).
+
+```powershell
+.\.venv\Scripts\python.exe -m demo.app
+```
+
+Mở [http://127.0.0.1:7860](http://127.0.0.1:7860), nhập bình luận rồi bấm **So sánh mô hình**. Checkbox **Bật chuẩn hóa Teencode / Nhiễu** mặc định tắt, áp dụng cho cả hai mô hình. BiLSTM chạy CPU, không cần Word2Vec gốc.
+
+Đổi cổng bằng `$env:GRADIO_SERVER_PORT = "7861"`. Có thể chạy trực tiếp `python demo/app.py`.
+
+## Huấn luyện và đánh giá
+
+`configs/tfidf_lr.yaml` dùng TF-IDF unigram/bigram và Logistic Regression cân bằng lớp. Có 8 tổ hợp bật/tắt PyVi, chuẩn hóa teencode và bỏ dấu, mỗi tổ hợp thử `C=1`, `C=4`. Mô hình học trên train, chọn theo Macro-F1 validation sạch rồi đánh giá test.
+
+Chạy lại thí nghiệm với thư mục riêng để giữ kết quả cũ:
+
+```powershell
+.\.venv\Scripts\python.exe -m scripts.train_tfidf --output-dir .cache/tfidf-replay --checkpoint .cache/tfidf-replay/best_tfidf.pkl
+```
+
+Lệnh `python -m scripts.train_tfidf` mặc định ghi vào `checkpoints/best_tfidf.pkl` và `reports/tfidf/`. Xem tùy chọn bằng `python scripts/train_tfidf.py --help`.
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q
 .\.venv\Scripts\python.exe -m scripts.evaluate_tfidf --output-dir .cache/baseline-check
+```
+
+Script đánh giá kiểm tra checksum dữ liệu với checkpoint. Khi demo đang chạy, mở terminal khác để kiểm tra API và checkbox:
+
+```powershell
 .\.venv\Scripts\python.exe -m scripts.check_demo --url http://127.0.0.1:7860
 ```
 
-Script đánh giá đối chiếu checksum dữ liệu với checkpoint. Kết quả kiểm tra demo nằm trong `.cache/demo_check/`.
+Kết quả kiểm tra demo nằm trong `.cache/demo_check/`.
 
-## Kết quả baseline
-
-`configs/tfidf_lr.yaml` dùng TF-IDF unigram/bigram và Logistic Regression cân bằng lớp. Có 8 tổ hợp bật/tắt PyVi, chuẩn hóa teencode và bỏ dấu, mỗi tổ hợp thử `C=1` và `C=4`. Pipeline học trên train và được chọn theo Macro-F1 trên validation sạch trước khi đánh giá test.
+## Kết quả TF-IDF
 
 Checkpoint dùng PyVi, giữ dấu, tắt chuẩn hóa teencode và chọn `C=4`. Accuracy / Macro-F1 đạt 90,02% / 76,87% trên validation sạch và 88,12% / 72,94% trên test sạch.
 
@@ -64,20 +90,14 @@ Checkpoint dùng PyVi, giữ dấu, tắt chuẩn hóa teencode và chọn `C=4`
 
 Mỗi hàng chỉ đổi một tùy chọn. Nhiễu teencode dùng seed cố định và cùng từ điển với bước chuẩn hóa. [Bảng 8 cấu hình](reports/tfidf/test_comparison.csv) · [Kết quả chi tiết](reports/tfidf/experiment_results.csv) · [Phiên bản và checksum](reports/tfidf/run_metadata.json)
 
-Để chạy lại thí nghiệm, lưu checkpoint và báo cáo vào thư mục riêng.
+## EDA và báo cáo
 
-```powershell
-.\.venv\Scripts\python.exe -m scripts.train_tfidf --output-dir .cache/tfidf-replay --checkpoint .cache/tfidf-replay/best_tfidf.pkl
-```
-
-Nếu chưa có checkpoint, `python -m scripts.train_tfidf` lưu `checkpoints/best_tfidf.pkl` và ghi báo cáo vào `reports/tfidf/`.
-
-## Notebook EDA
-
-Mở notebook và chọn kernel `.venv`, hoặc chạy lệnh sau. [Notebook EDA](notebooks/01_eda_data_stats.ipynb)
+Mở [notebook EDA](notebooks/01_eda_data_stats.ipynb) với kernel `.venv`, hoặc chạy:
 
 ```powershell
 .\.venv\Scripts\python.exe -m scripts.execute_eda --repeats 1
 ```
 
-Notebook lưu các bảng và biểu đồ PNG (300 dpi), PDF trong `reports/eda/`. [Phân bố nhãn](reports/eda/label_distribution.png) · [Độ dài bình luận](reports/eda/comment_lengths.pdf) · [Độ dài theo cảm xúc](reports/eda/length_by_sentiment.pdf)
+Bảng CSV, ảnh PNG 300 dpi và PDF được lưu trong `reports/eda/`: [phân bố nhãn](reports/eda/label_distribution.png), [độ dài bình luận](reports/eda/comment_lengths.pdf), [độ dài theo cảm xúc](reports/eda/length_by_sentiment.pdf).
+
+[Báo cáo bàn giao](reports/handoff/README.md) gồm F1 từng lớp, Confusion Matrix, kết quả demo, hướng dẫn tạo lại bảng và khai báo sử dụng AI.
