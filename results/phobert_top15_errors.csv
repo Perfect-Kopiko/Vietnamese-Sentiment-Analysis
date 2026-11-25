@@ -1,0 +1,16 @@
+﻿text,true_label,pred_label,confidence,is_sarcastic,notes
+"Cô giảng bài cực kỳ dễ hiểu, hiểu chết liền luôn á.",Negative,Positive,0.991,1,Mỉa mai (hiểu chết liền = không hiểu)
+"Thầy đọc slide truyền cảm như ru ngủ, thật là một trải nghiệm khó quên.",Negative,Positive,0.9906,1,Mỉa mai giảng buồn ngủ
+Sinh viên rất thích cách thầy tạo bất ngờ bằng việc điểm danh đúng ngày trời bão.,Negative,Positive,0.9901,1,Mỉa mai điểm danh bất hợp lý
+"Thầy dạy hay quá, cả lớp ngủ ngon lành từ đầu đến cuối tiết.",Negative,Positive,0.99,1,Mỉa mai khen để chê (ngủ ngon = chán)
+Mình cực kỳ ấn tượng với tốc độ phản hồi email sau 3 tuần của giảng viên.,Negative,Positive,0.9891,1,Mỉa mai phản hồi quá chậm
+"Cô rất tâm lý, tuần nào cũng tặng thêm 5 bài tập lớn cho sinh viên đỡ rảnh.",Negative,Positive,0.989,1,Mỉa mai giao quá nhiều bài tập
+"Cô rất công bằng, ai cô thích thì 10 điểm còn lại tùy tâm trạng.",Negative,Positive,0.9889,1,Mỉa mai chấm điểm cảm tính
+Học kỳ này thật tuyệt vời khi được đăng ký trúng lớp của thầy.,Negative,Positive,0.9887,1,Mỉa mai ngữ cảnh ẩn ý tiêu cực
+"Thầy giải đáp thắc mắc rất chi tiết, cứ hỏi câu nào là thầy bảo tự lên Google tìm.",Negative,Positive,0.9886,1,Mỉa mai giảng viên không hỗ trợ
+"Thầy ra đề bám sát bài giảng ghê, 90% nội dung chưa từng xuất hiện trên lớp.",Negative,Positive,0.9877,1,Mỉa mai đề thi lệch nội dung dạy
+Slide bài giảng không có gì nổi bật nhưng cũng không thiếu thông tin cần thiết.,Neutral,Negative,0.9864,0,Phủ định kép mang nghĩa trung tính
+"Học môn này bổ ích quá, học xong một kỳ đầu óc vẫn trắng tinh như mới.",Negative,Positive,0.986,1,Mỉa mai không tiếp thu được kiến thức
+"Slide bài giảng đẹp xuất sắc, toàn chữ là chữ nhìn hoa cả mắt.",Negative,Positive,0.9847,1,Mỉa mai khen slide đẹp nhưng thực tế rối chữ
+"Thầy nhiệt tình hết mức, hỏi bài trên nhóm từ tháng trước đến giờ vẫn chưa thèm seen.",Negative,Positive,0.9837,1,Mỉa mai giảng viên không phản hồi
+"Lịch học sắp xếp hợp lý ghê, học sáng thứ 7 lúc 7 giờ để rèn luyện sức khỏe.",Negative,Positive,0.9832,1,Mỉa mai lịch học bất hợp lý
