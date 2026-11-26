@@ -16,13 +16,22 @@ class PhoBERTClassifier(nn.Module):
         num_classes: int = 3,
         dropout: float = 0.3,
         freeze_backbone: bool = False,
+        *,
+        backbone_config=None,
     ):
         super().__init__()
         self.pretrained_name = pretrained_name
         self.num_classes = num_classes
 
-        self.config = AutoConfig.from_pretrained(pretrained_name)
-        self.backbone = AutoModel.from_pretrained(pretrained_name, config=self.config, attn_implementation="eager",)
+        if backbone_config is None:
+            self.config = AutoConfig.from_pretrained(pretrained_name)
+            self.backbone = AutoModel.from_pretrained(
+                pretrained_name, config=self.config, attn_implementation="eager",
+            )
+        else:
+            # Demo dựng kiến trúc cục bộ rồi nạp toàn bộ state_dict đã fine-tune.
+            self.config = backbone_config
+            self.backbone = AutoModel.from_config(self.config, attn_implementation="eager")
 
         if freeze_backbone:
             for param in self.backbone.parameters():

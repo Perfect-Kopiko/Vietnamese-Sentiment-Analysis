@@ -26,16 +26,22 @@ Câu nhập: `gv dạy ko rõ ràng, sv k hiểu bài`.
 | TF-IDF | Bật | Tiêu cực | 96,2811% | 0,5167% | 3,2023% |
 | BiLSTM | Tắt | Tích cực | 15,3151% | 3,3897% | 81,2952% |
 | BiLSTM | Bật | Tiêu cực | 99,6417% | 0,0296% | 0,3286% |
+| PhoBERT | Tắt | Tiêu cực | 98,4404% | 0,4137% | 1,1459% |
+| PhoBERT | Bật | Tiêu cực | 98,5057% | 0,4295% | 1,0648% |
 
-[CSV demo](demo_predictions.csv): 5 câu mẫu, hai trạng thái chuẩn hóa, hai mô hình; thứ tự xác suất 0/1/2. Checkbox đổi đầu vào của checkpoint cố định, khác huấn luyện riêng từng cấu hình trong bảng ablation. Chuẩn hóa bằng từ điển không khôi phục dấu và không đảm bảo cải thiện mọi câu.
+[CSV ba mô hình](demo_three_models.csv): 5 câu mẫu, hai trạng thái chuẩn hóa, ba mô hình; thứ tự xác suất 0/1/2. [CSV TF-IDF và BiLSTM trước tích hợp](demo_predictions.csv) được giữ nguyên. Checkbox đổi đầu vào của checkpoint cố định, khác huấn luyện riêng từng cấu hình trong bảng ablation. Chuẩn hóa bằng từ điển không khôi phục dấu và không đảm bảo cải thiện mọi câu.
 
 ## Tích hợp và kiểm thử
 
-TF-IDF và BiLSTM đã tích hợp; checkpoint chính: `bilstm_no_seg_w2v_best.pt`. Kết quả BiLSTM: [không tách từ](../../results/bilstm_no_seg_w2v.json), [có tách từ](../../results/bilstm_seg_w2v_weighted_ce.json).
+TF-IDF, BiLSTM và PhoBERT đã tích hợp; checkpoint BiLSTM chính: `bilstm_no_seg_w2v_best.pt`. Kết quả BiLSTM: [không tách từ](../../results/bilstm_no_seg_w2v.json), [có tách từ](../../results/bilstm_seg_w2v_weighted_ce.json).
 
-**PhoBERT đang chờ tích hợp**: thiếu checkpoint và mã suy luận, tokenizer/backbone cục bộ cùng cấu hình tương ứng.
+PhoBERT dùng checkpoint `best_phobert/model.pt`, tokenizer cục bộ, max length 128, tách từ PyVi. Chuẩn hóa mặc định của checkpoint là bật; trong demo, cờ này luôn theo checkbox chung. Các bảng ablation, mỉa mai, hình và notebook của thành viên PhoBERT được giữ nguyên trong [results](../../results/) và [notebook phân tích lỗi](../../notebooks/02_error_visualization.ipynb).
 
-Kiểm thử: **30 test pytest pass**; HTTP 200, 10 yêu cầu cho 20 dự đoán khớp suy luận trực tiếp; đủ ba xác suất, tổng bằng 1 trong sai số; từ chối câu trống/quá dài. Ảnh giao diện sáng/tối được kiểm tra bằng Chrome headless. Chưa kiểm thử thao tác click trên trình duyệt và suy luận đủ ba mô hình.
+Đánh giá lại PhoBERT trên toàn bộ 3.166 câu test bằng CPU, không kết nối mạng: Accuracy 93,8092%, Macro-F1 82,5708%, Weighted-F1 93,5620%. Cả ba chỉ số khớp chính xác với `test_metrics.json` đi kèm checkpoint; không huấn luyện lại hoặc ghi đè kết quả của thành viên.
+
+Kiểm thử: **36 test pytest pass**; HTTP 200, 10 yêu cầu cho 30 dự đoán khớp suy luận trực tiếp; đủ ba xác suất, tổng bằng 1 trong sai số; từ chối câu trống/quá dài. App chạy với kết nối mạng ngoài bị chặn; kiểm tra nạp một lần và bật/tắt chuẩn hóa cho cả ba mô hình đều đạt. Qua 20 yêu cầu liên tiếp sau khi khởi động, RAM không tăng dần; mức cao nhất ghi nhận của tiến trình demo khoảng 905 MiB trên môi trường kiểm tra.
+
+Màu chữ và nền của cột kết quả đã có quy tắc riêng cho sáng/tối; các cặp màu kiểm tra có độ tương phản từ 8,2:1. Chưa xác nhận trực quan và thao tác click trên trình duyệt ở bản ba mô hình vì dịch vụ điều khiển trình duyệt không khả dụng.
 
 ## Tạo lại bảng số liệu
 

@@ -26,6 +26,8 @@ class InferencePipeline:
         self.load_error = None
         self.bilstm = None
         self.bilstm_error = None
+        self.phobert = None
+        self.phobert_error = None
         if self.checkpoint.is_file():
             try:
                 self.artifact = load_checkpoint(self.checkpoint)
@@ -39,6 +41,14 @@ class InferencePipeline:
             except Exception as exc:
                 LOGGER.exception("BiLSTM loading failed")
                 self.bilstm_error = f"Không nạp được BiLSTM: {type(exc).__name__}: {exc}"
+        if self.phobert_checkpoint.is_file():
+            try:
+                from demo.phobert_inference import PhoBERTInference
+
+                self.phobert = PhoBERTInference(self.phobert_checkpoint)
+            except Exception as exc:
+                LOGGER.exception("PhoBERT loading failed")
+                self.phobert_error = f"Không nạp được PhoBERT: {type(exc).__name__}: {exc}"
 
     def status(self, model):
         if model == "BiLSTM":
@@ -47,10 +57,10 @@ class InferencePipeline:
             return (f"Sẵn sàng · {self.bilstm_checkpoint.name} · CPU" if self.bilstm is not None
                     else f"Chưa sẵn sàng. Thiếu checkpoint BiLSTM: {self.bilstm_checkpoint.name}.")
         if model == "PhoBERT":
-            return ("Chưa sẵn sàng. Đã có checkpoint PhoBERT, còn thiếu kiến trúc, tokenizer "
-                    "và cấu hình suy luận từ nhánh PhoBERT."
-                    if self.phobert_checkpoint.is_file() else
-                    "Chưa sẵn sàng. Thiếu checkpoint PhoBERT và mã suy luận trên main.")
+            if self.phobert_error:
+                return self.phobert_error
+            return (f"Sẵn sàng · {self.phobert_checkpoint.parent.name}/{self.phobert_checkpoint.name} · CPU"
+                    if self.phobert is not None else "Chưa sẵn sàng. Thiếu checkpoint PhoBERT.")
         if self.load_error:
             return self.load_error
         if self.artifact is None:
@@ -66,12 +76,16 @@ class InferencePipeline:
             raise ValueError(f"Bình luận tối đa {MAX_TEXT_LENGTH:,} ký tự.")
         result = {"model": model, "status": self.status(model), "label": None,
                   "label_id": None, "probabilities": None, "error": None}
-        if model == "PhoBERT" or (model == "BiLSTM" and self.bilstm is None):
+        if ((model == "PhoBERT" and self.phobert is None)
+                or (model == "BiLSTM" and self.bilstm is None)):
             return result
         if model == MODEL_NAMES[0] and self.artifact is None:
             return result
         try:
-            if model == "BiLSTM":
+            if model == "PhoBERT":
+                probabilities = np.asarray(self.phobert.predict_proba(text, normalize_noise), dtype=float)
+                classes = np.asarray(self.phobert.class_ids)
+            elif model == "BiLSTM":
                 probabilities = np.asarray(self.bilstm.predict_proba(text, normalize_noise), dtype=float)
                 classes = np.asarray([0, 1, 2])
             else:

@@ -1,4 +1,5 @@
 :root { color-scheme: light; }
+.dark { color-scheme: dark; }
 .gradio-container { max-width: 1440px !important; margin: auto !important; }
 body { background: #f6f8fa; }
 #demo-shell { gap: 22px; }
@@ -22,8 +23,22 @@ body { background: #f6f8fa; }
   --input-text-color: #183044;
   --input-background-fill: #ffffff;
 }
-.model-card :is(h3, p, span, .label, .confidence, .prose) { color: #183044 !important; }
+.model-card :is(h3, p, span, .label, .confidence, .prose) { color: var(--body-text-color) !important; }
 .model-card .output-class { background: #e8f5f3 !important; color: #183044 !important; }
+.dark .input-panel, .dark .model-card {
+  background: #172534 !important;
+  border-color: #34475b !important;
+  --body-text-color: #e2e8f0;
+  --block-title-text-color: #e2e8f0;
+  --block-label-text-color: #e2e8f0;
+  --block-label-background-fill: #223548;
+  --block-background-fill: #172534;
+  --background-fill-primary: #172534;
+  --background-fill-secondary: #223548;
+  --input-text-color: #e2e8f0;
+  --input-background-fill: #172534;
+}
+.dark .model-card .output-class { background: #24483f !important; color: #e2e8f0 !important; }
 .model-status { font-size: 12px; line-height: 1.6; min-height: 44px; }
 @media (max-width: 700px) {
   .hero { padding-top: 18px; }

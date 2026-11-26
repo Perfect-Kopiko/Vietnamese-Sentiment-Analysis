@@ -1,6 +1,6 @@
 # Vietnamese Sentiment Analysis
 
-Phân loại bình luận sinh viên UIT-VSFC thành ba nhãn: 0 (tiêu cực), 1 (trung tính), 2 (tích cực). Demo so sánh TF-IDF + Logistic Regression và BiLSTM; PhoBERT đang chờ tích hợp.
+Phân loại bình luận sinh viên UIT-VSFC thành ba nhãn: 0 (tiêu cực), 1 (trung tính), 2 (tích cực). Demo so sánh TF-IDF + Logistic Regression, BiLSTM và PhoBERT trên cùng một bình luận.
 
 ## Cài đặt
 
@@ -12,7 +12,7 @@ python -m venv .venv
 .\.venv\Scripts\python.exe -m pip check
 ```
 
-Chỉ chạy demo: cài `requirements-demo.txt`. `requirements.txt` chứa thư viện chung của nhóm. Trên Linux/macOS, dùng `./.venv/bin/python` thay `.\.venv\Scripts\python.exe`.
+Chỉ chạy demo: cài `requirements-demo.txt`. `requirements.txt` chứa thư viện chung để huấn luyện và phân tích của nhóm; các phiên bản dùng chung tương thích với demo. Môi trường đã kiểm tra: Python 3.13.5, PyTorch 2.14.0, Transformers 5.24.0. Trên Linux/macOS, dùng `./.venv/bin/python` thay `.\.venv\Scripts\python.exe`.
 
 ## Dữ liệu
 
@@ -38,18 +38,31 @@ $env:HF_HOME = Join-Path (Get-Location) ".cache\hf"
 ```text
 checkpoints/
 ├── best_tfidf.pkl
-└── bilstm/
-    ├── bilstm_no_seg_w2v_best.pt
-    └── bilstm_seg_w2v_weighted_ce_best.pt
+├── bilstm/
+│   ├── bilstm_no_seg_w2v_best.pt
+│   └── bilstm_seg_w2v_weighted_ce_best.pt
+└── best_phobert/
+    ├── model.pt
+    ├── config.json
+    ├── tokenizer_config.json
+    ├── added_tokens.json
+    ├── vocab.txt
+    └── bpe.codes
 ```
 
-Checkpoint chính là `bilstm_no_seg_w2v_best.pt`; bản có tách từ dùng để đối chiếu. Xem [hướng dẫn checkpoint](checkpoints/README.md).
+Checkpoint BiLSTM chính là `bilstm_no_seg_w2v_best.pt`; bản có tách từ dùng để đối chiếu. Giải nén ZIP trọng số PhoBERT vào `checkpoints/` để có đúng thư mục `best_phobert/` như trên. Giữ nguyên `config.json` huấn luyện trong ZIP; cấu hình backbone nằm riêng tại `configs/phobert_backbone.json`. Xem [hướng dẫn checkpoint](checkpoints/README.md).
 
 ```powershell
+$env:HF_HUB_OFFLINE = "1"
+$env:TRANSFORMERS_OFFLINE = "1"
 .\.venv\Scripts\python.exe -m demo.app
 ```
 
-Mở [http://127.0.0.1:7860](http://127.0.0.1:7860), nhập bình luận rồi bấm **So sánh mô hình**. Checkbox **Bật chuẩn hóa Teencode / Nhiễu** mặc định tắt, áp dụng cho cả hai mô hình. BiLSTM chạy CPU, không cần Word2Vec gốc.
+Mở [http://127.0.0.1:7860](http://127.0.0.1:7860), nhập bình luận rồi bấm **So sánh mô hình**. Ba cột hiển thị nhãn và xác suất cả ba lớp. Checkbox **Bật chuẩn hóa Teencode / Nhiễu** mặc định tắt, áp dụng cho cả ba mô hình.
+
+Demo nạp mỗi mô hình một lần khi khởi động. BiLSTM và PhoBERT chạy CPU ở chế độ suy luận, không cần Word2Vec gốc hay tải trọng số nền từ Hugging Face. PhoBERT dùng tokenizer BPE trong checkpoint, tách từ bằng PyVi và cắt/pad đến 128 token. Checkbox chỉ thay đổi chuẩn hóa nhiễu của lượt dự đoán; không đổi tách từ, nhãn hay trọng số. Checkpoint PhoBERT được huấn luyện với chuẩn hóa bật, nên muốn dùng đúng cấu hình huấn luyện hãy bật checkbox.
+
+Cần cài dependency trước khi ngắt mạng. Khi các checkpoint và tài nguyên trên đã có, demo chạy offline; không cần dataset để suy luận và không huấn luyện lại.
 
 Đổi cổng bằng `$env:GRADIO_SERVER_PORT = "7861"`. Có thể chạy trực tiếp `python demo/app.py`.
 
