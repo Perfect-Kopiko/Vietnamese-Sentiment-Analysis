@@ -1,0 +1,5 @@
+run_name,use_segment,normalize_noise,use_class_weights,accuracy,macro_f1,weighted_f1
+phobert-ablation-no-norm,True,False,True,0.9368288060644346,0.837724915272335,0.9353426811404731
+phobert-ablation-no-segment,False,True,True,0.9377763739734681,0.834927087072209,0.9357913557232321
+phobert-ablation-no-weights,True,True,False,0.9377763739734681,0.8242940446921092,0.9342537641750434
+phobert-ablation-full,True,True,True,0.9380922299431459,0.8257080297395513,0.9356198488764205
