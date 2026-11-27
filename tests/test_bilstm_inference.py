@@ -64,4 +64,6 @@ def test_main_checkpoint_and_repeatable_toggle(monkeypatch):
     assert sum(first["probabilities"].values()) == pytest.approx(1, abs=1e-6)
     assert first["probabilities"] != enabled["probabilities"]
     assert inference.predict(text, "BiLSTM") == first
-    loader.assert_called_once_with(inference.bilstm_checkpoint, map_location="cpu", weights_only=True)
+    calls = [call for call in loader.call_args_list if call.args[0] == inference.bilstm_checkpoint]
+    assert len(calls) == 1
+    assert calls[0].kwargs == {"map_location": "cpu", "weights_only": True}

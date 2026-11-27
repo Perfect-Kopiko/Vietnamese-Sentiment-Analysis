@@ -1,0 +1,31 @@
+﻿intended_group,text,model,normalize_noise,prediction,probability_0,probability_1,probability_2
+Tích cực,"Thầy giảng bài rất dễ hiểu, nhiệt tình và tận tâm với sinh viên.",TF-IDF + Logistic Regression,False,Tích cực,0.00038065931353617634,5.565331531951512e-05,0.9995636873711443
+Tích cực,"Thầy giảng bài rất dễ hiểu, nhiệt tình và tận tâm với sinh viên.",BiLSTM,False,Tích cực,0.0026189617346972227,0.0005066056619398296,0.9968744516372681
+Tích cực,"Thầy giảng bài rất dễ hiểu, nhiệt tình và tận tâm với sinh viên.",PhoBERT,False,Tích cực,0.004412046633660793,0.003884056815877557,0.9917038679122925
+Tích cực,"Thầy giảng bài rất dễ hiểu, nhiệt tình và tận tâm với sinh viên.",TF-IDF + Logistic Regression,True,Tích cực,0.00038065931353617634,5.565331531951512e-05,0.9995636873711443
+Tích cực,"Thầy giảng bài rất dễ hiểu, nhiệt tình và tận tâm với sinh viên.",BiLSTM,True,Tích cực,0.0026189617346972227,0.0005066056619398296,0.9968744516372681
+Tích cực,"Thầy giảng bài rất dễ hiểu, nhiệt tình và tận tâm với sinh viên.",PhoBERT,True,Tích cực,0.004412046633660793,0.003884056815877557,0.9917038679122925
+Tiêu cực,"Giảng viên dạy khó hiểu, thiếu nhiệt tình và thường xuyên đi trễ.",TF-IDF + Logistic Regression,False,Tiêu cực,0.9897751580817985,0.001141841321293423,0.009083000596908128
+Tiêu cực,"Giảng viên dạy khó hiểu, thiếu nhiệt tình và thường xuyên đi trễ.",BiLSTM,False,Tiêu cực,0.9907033443450928,0.00017419482173863798,0.009122470393776894
+Tiêu cực,"Giảng viên dạy khó hiểu, thiếu nhiệt tình và thường xuyên đi trễ.",PhoBERT,False,Tiêu cực,0.984633207321167,0.004093516152352095,0.011273318901658058
+Tiêu cực,"Giảng viên dạy khó hiểu, thiếu nhiệt tình và thường xuyên đi trễ.",TF-IDF + Logistic Regression,True,Tiêu cực,0.9897751580817985,0.001141841321293423,0.009083000596908128
+Tiêu cực,"Giảng viên dạy khó hiểu, thiếu nhiệt tình và thường xuyên đi trễ.",BiLSTM,True,Tiêu cực,0.9907033443450928,0.00017419482173863798,0.009122470393776894
+Tiêu cực,"Giảng viên dạy khó hiểu, thiếu nhiệt tình và thường xuyên đi trễ.",PhoBERT,True,Tiêu cực,0.984633207321167,0.004093516152352095,0.011273318901658058
+Trung tính,Môn này có ba tín chỉ.,TF-IDF + Logistic Regression,False,Trung tính,0.1208883062495815,0.8099450161131496,0.0691666776372689
+Trung tính,Môn này có ba tín chỉ.,BiLSTM,False,Trung tính,0.0011551679344847798,0.9974043965339661,0.001440424588508904
+Trung tính,Môn này có ba tín chỉ.,PhoBERT,False,Trung tính,0.006808823440223932,0.9874582290649414,0.005732942372560501
+Trung tính,Môn này có ba tín chỉ.,TF-IDF + Logistic Regression,True,Trung tính,0.1771073794449289,0.7634006804448843,0.05949194011018686
+Trung tính,Môn này có ba tín chỉ.,BiLSTM,True,Trung tính,0.005729819647967815,0.9895832538604736,0.004686940927058458
+Trung tính,Môn này có ba tín chỉ.,PhoBERT,True,Trung tính,0.006575712002813816,0.9877490401268005,0.005675230175256729
+Teencode,"gv dạy ko rõ ràng, sv k hiểu bài",TF-IDF + Logistic Regression,False,Tích cực,0.025586571446986766,0.00111806911713266,0.9732953594358805
+Teencode,"gv dạy ko rõ ràng, sv k hiểu bài",BiLSTM,False,Tích cực,0.1531510353088379,0.03389729931950569,0.8129516243934631
+Teencode,"gv dạy ko rõ ràng, sv k hiểu bài",PhoBERT,False,Tiêu cực,0.9844043850898743,0.004136905539780855,0.011458688415586948
+Teencode,"gv dạy ko rõ ràng, sv k hiểu bài",TF-IDF + Logistic Regression,True,Tiêu cực,0.9628105206999094,0.005166973096601216,0.03202250620348934
+Teencode,"gv dạy ko rõ ràng, sv k hiểu bài",BiLSTM,True,Tiêu cực,0.9964174032211304,0.00029636130784638226,0.0032862713560462
+Teencode,"gv dạy ko rõ ràng, sv k hiểu bài",PhoBERT,True,Tiêu cực,0.9850572943687439,0.004294520244002342,0.010648109018802643
+Không dấu,thay day rat hay nhung bai tap hoi kho,TF-IDF + Logistic Regression,False,Tích cực,0.25686380803275727,0.1521601655801951,0.5909760263870476
+Không dấu,thay day rat hay nhung bai tap hoi kho,BiLSTM,False,Tiêu cực,0.9069915413856506,0.0024076905101537704,0.09060077369213104
+Không dấu,thay day rat hay nhung bai tap hoi kho,PhoBERT,False,Tích cực,0.005621550139039755,0.004187870770692825,0.9901905059814453
+Không dấu,thay day rat hay nhung bai tap hoi kho,TF-IDF + Logistic Regression,True,Tiêu cực,0.553048719384318,0.05926780201036807,0.387683478605314
+Không dấu,thay day rat hay nhung bai tap hoi kho,BiLSTM,True,Tiêu cực,0.9819169640541077,0.002769776852801442,0.015313326381146908
+Không dấu,thay day rat hay nhung bai tap hoi kho,PhoBERT,True,Tiêu cực,0.7571895718574524,0.01897263526916504,0.22383782267570496
