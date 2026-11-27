@@ -1,63 +1,69 @@
-"""
-Module tính toán và định dạng các chỉ số đánh giá (Evaluation Metrics)
-cho bài toán Phân tích cảm xúc văn bản tiếng Việt (3 lớp: Negative=0, Neutral=1, Positive=2).
-"""
+"""Chỉ số đánh giá theo thứ tự nhãn 0, 1, 2."""
 
-from typing import Any, Dict, List, Union
+import sys
+from typing import Any, Dict
 
 import numpy as np
-import torch
-from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, f1_score
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+from sklearn.metrics import f1_score, precision_score, recall_score
+
+LABEL_IDS = [0, 1, 2]
+LABEL_NAMES = ("negative", "neutral", "positive")
 
 
-def compute_metrics(
-    y_true: Union[List[int], np.ndarray, torch.Tensor],
-    y_pred: Union[List[int], np.ndarray, torch.Tensor]
-) -> Dict[str, Any]:
-    """
-    Tính toán các chỉ số đánh giá chuẩn cho bài toán phân loại cảm xúc 3 lớp:
-    - accuracy: Độ chính xác tổng thể.
-    - macro_f1: F1-score trung bình không trọng số giữa các lớp (quan trọng nhất khi mất cân bằng).
-    - weighted_f1: F1-score có trọng số theo kích thước từng lớp.
-    - f1_negative (lớp 0), f1_neutral (lớp 1), f1_positive (lớp 2): F1 riêng từng lớp.
-    - confusion_matrix: Ma trận nhầm lẫn kích thước 3x3 dạng danh sách lồng.
-
-    Args:
-        y_true: Nhãn thực tế (ground truth).
-        y_pred: Nhãn dự đoán (predictions).
-
-    Returns:
-        dict: Chứa đầy đủ các chỉ số đánh giá.
-    """
-    if isinstance(y_true, torch.Tensor):
-        y_true = y_true.detach().cpu().numpy()
-    if isinstance(y_pred, torch.Tensor):
-        y_pred = y_pred.detach().cpu().numpy()
-
-    y_true = np.asarray(y_true, dtype=np.int64)
-    y_pred = np.asarray(y_pred, dtype=np.int64)
-
-    acc = float(accuracy_score(y_true, y_pred))
-    macro_f1 = float(f1_score(y_true, y_pred, average="macro", zero_division=0))
-    weighted_f1 = float(f1_score(y_true, y_pred, average="weighted", zero_division=0))
-
-    # F1 score cho từng lớp (0: Negative, 1: Neutral, 2: Positive)
-    f1_per_class = f1_score(y_true, y_pred, average=None, labels=[0, 1, 2], zero_division=0)
-    f1_neg = float(f1_per_class[0])
-    f1_neu = float(f1_per_class[1])
-    f1_pos = float(f1_per_class[2])
-
-    # Confusion matrix (3x3)
-    cm = confusion_matrix(y_true, y_pred, labels=[0, 1, 2]).tolist()
-
+def _accuracy_and_macro_f1(y_true, y_pred, *, labels=None):
     return {
-        "accuracy": acc,
-        "macro_f1": macro_f1,
-        "weighted_f1": weighted_f1,
-        "f1_negative": f1_neg,
-        "f1_neutral": f1_neu,
-        "f1_positive": f1_pos,
-        "confusion_matrix": cm
+        "accuracy": float(accuracy_score(y_true, y_pred)),
+        "macro_f1": float(
+            f1_score(y_true, y_pred, labels=labels, average="macro", zero_division=0)
+        ),
+    }
+
+
+def _confusion_matrix(y_true, y_pred):
+    return confusion_matrix(y_true, y_pred, labels=LABEL_IDS).tolist()
+
+
+def classification_metrics(y_true, y_pred):
+    """Tính trung bình macro trên cả ba nhãn, kể cả nhãn vắng mặt."""
+    kwargs = {"labels": LABEL_IDS, "average": "macro", "zero_division": 0}
+    return {
+        **_accuracy_and_macro_f1(y_true, y_pred, labels=LABEL_IDS),
+        "macro_precision": float(precision_score(y_true, y_pred, **kwargs)),
+        "macro_recall": float(recall_score(y_true, y_pred, **kwargs)),
+    }
+
+
+def classification_details(y_true, y_pred):
+    return {
+        "classification_report": classification_report(
+            y_true, y_pred, labels=LABEL_IDS,
+            target_names=LABEL_NAMES,
+            output_dict=True, zero_division=0,
+        ),
+        "confusion_matrix": _confusion_matrix(y_true, y_pred),
+        "label_order": LABEL_IDS,
+    }
+
+
+def _numpy_labels(values):
+    # Tensor chỉ xuất hiện khi PyTorch đã được nạp.
+    torch = sys.modules.get("torch")
+    if torch is not None and isinstance(values, torch.Tensor):
+        values = values.detach().cpu().numpy()
+    return np.asarray(values, dtype=np.int64)
+
+
+def compute_metrics(y_true, y_pred) -> Dict[str, Any]:
+    """Nhận list, mảng NumPy hoặc tensor và tính Macro-F1 trên các nhãn xuất hiện."""
+    y_true = _numpy_labels(y_true)
+    y_pred = _numpy_labels(y_pred)
+    f1_per_class = f1_score(y_true, y_pred, average=None, labels=LABEL_IDS, zero_division=0)
+    return {
+        **_accuracy_and_macro_f1(y_true, y_pred),
+        "weighted_f1": float(f1_score(y_true, y_pred, average="weighted", zero_division=0)),
+        **{f"f1_{name}": float(score) for name, score in zip(LABEL_NAMES, f1_per_class)},
+        "confusion_matrix": _confusion_matrix(y_true, y_pred),
     }
 
 

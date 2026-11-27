@@ -1,0 +1,64 @@
+{
+  "format_version": 1,
+  "selection": {
+    "experiment": "use_segment1_normalize_noise0_fold_accents0",
+    "use_segment": true,
+    "normalize_noise": false,
+    "fold_accents": false,
+    "C": 4.0,
+    "accuracy": 0.9001895135818067,
+    "macro_f1": 0.768683246923044,
+    "macro_precision": 0.7542842668982486,
+    "macro_recall": 0.7898790289245601
+  },
+  "selection_split": "validation",
+  "selection_metric": "macro_f1",
+  "config": {
+    "seed": 42,
+    "data_dir": "data/raw",
+    "output_dir": "reports/tfidf",
+    "checkpoint": "checkpoints/best_tfidf.pkl",
+    "tfidf": {
+      "ngram_range": [
+        1,
+        2
+      ],
+      "min_df": 2,
+      "max_df": 1.0,
+      "max_features": 40000,
+      "sublinear_tf": true
+    },
+    "logistic_regression": {
+      "C_values": [
+        1.0,
+        4.0
+      ],
+      "class_weight": "balanced",
+      "solver": "lbfgs",
+      "max_iter": 2000
+    },
+    "experiments": {
+      "use_segment": [
+        false,
+        true
+      ],
+      "normalize_noise": [
+        false,
+        true
+      ],
+      "fold_accents": [
+        false,
+        true
+      ]
+    },
+    "noise": {
+      "teencode_probability": 0.3
+    }
+  },
+  "data_sha256": {
+    "train": "fe9104b15fe8d5608247b1028ae5511c13b542c40d9b3fc35cf6ceaec51e395c",
+    "validation": "9e8f408b0529dc162d88aec652c87a19e77ed2625d76e393d693367b90cef4c9",
+    "test": "f6c354be06c692582e816b056ff9611292c7a573ba6a277bdea632eabb23dafb"
+  },
+  "created_at_utc": "2026-11-24T08:52:20.429796+00:00"
+}

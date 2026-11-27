@@ -1,0 +1,29 @@
+{
+  "python": "3.13.5",
+  "packages": {
+    "scikit-learn": "1.7.2",
+    "numpy": "2.3.4",
+    "pandas": "2.3.3",
+    "pyvi": "0.1.1",
+    "joblib": "1.5.2",
+    "PyYAML": "6.0.2",
+    "datasets": "5.2.0",
+    "gradio": "6.32.0",
+    "matplotlib": "3.10.7",
+    "seaborn": "0.13.2",
+    "nbclient": "0.10.2",
+    "ipykernel": "6.30.1"
+  },
+  "data_sha256": {
+    "train": "fe9104b15fe8d5608247b1028ae5511c13b542c40d9b3fc35cf6ceaec51e395c",
+    "validation": "9e8f408b0529dc162d88aec652c87a19e77ed2625d76e393d693367b90cef4c9",
+    "test": "f6c354be06c692582e816b056ff9611292c7a573ba6a277bdea632eabb23dafb"
+  },
+  "dictionary_sha256": "94a9d22b41b17b49b0b72c733abfe9d72f086017bf783ae2577e2635ab572fec",
+  "checkpoint_sha256": "fb83c59d9bd466001711f7744c119a37cf5b65f161d88ff8da8800156844c704",
+  "noise_seed": 42,
+  "noise_probability": 0.3,
+  "protocol": "Fit train only; select C and demo model on clean validation macro-F1; freeze selection before test; no refit on validation; noise only at evaluation.",
+  "normalization": "Teencode dictionary; optional accent folding after optional PyVi. No accent restoration. Normalization variants are separately trained.",
+  "teencode_scope": "Existing simulator replaces eligible single tokens, not multiword phrases."
+}

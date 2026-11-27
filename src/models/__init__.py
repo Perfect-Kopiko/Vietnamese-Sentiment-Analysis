@@ -5,20 +5,22 @@ Package chứa các mô hình Deep Learning và Baseline cho bài toán Phân t�
 - FocalLoss, compute_class_weights, get_loss_function: Các hàm mất mát xử lý mất cân bằng lớp.
 """
 
-from src.models.losses import (
-    FocalLoss,
-    compute_class_weights,
-    get_loss_function,
-)
-from src.models.bilstm import (
-    BiLSTMSentiment,
-    SelfAttentionPooling,
-)
+from importlib import import_module
 
-__all__ = [
-    "BiLSTMSentiment",
-    "SelfAttentionPooling",
-    "FocalLoss",
-    "compute_class_weights",
-    "get_loss_function",
-]
+# Chỉ nạp PyTorch khi truy cập API BiLSTM.
+_EXPORTS = {
+    "BiLSTMSentiment": ".bilstm",
+    "SelfAttentionPooling": ".bilstm",
+    "FocalLoss": ".losses",
+    "compute_class_weights": ".losses",
+    "get_loss_function": ".losses",
+}
+__all__ = list(_EXPORTS)
+
+
+def __getattr__(name):
+    if name not in _EXPORTS:
+        raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+    value = getattr(import_module(_EXPORTS[name], __name__), name)
+    globals()[name] = value
+    return value

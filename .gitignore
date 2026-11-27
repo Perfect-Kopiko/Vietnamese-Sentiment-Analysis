@@ -21,3 +21,26 @@ data/raw/
 
 # Logs & tracking
 wandb/
+
+# Generated/local files
+data/processed/
+data/.cache/
+.cache/
+.pytest_cache/
+.pytest-tmp/
+/Vietnamese-Sentiment-Analysis-review*.zip
+/Vietnamese-Sentiment-Analysis-source-review*.zip
+/Vietnamese-Sentiment-Analysis-feat-phobert-analysis.zip
+/best_phobert-*.zip
+/nhiệm vụ tiếp.docx
+/*nhiệm*vụ*.docx
+/*phân*công*.docx
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+*.log
+*.tmp
+*.joblib
+*.safetensors
+*.onnx
+.env
+env/
